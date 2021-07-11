@@ -10,17 +10,14 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-// creates and empty "board" for the user to see where marks can be placed.
-// using let because the variable is expected to change with more 'X's and 'O's to add
 let board = [
   [' ', ' ', ' '],
   [' ', ' ', ' '],
   [' ', ' ', ' ']
 ];
 
-// assigns the first mark as 'X'
-// using let because the variable is expected to change from 'X' to 'O' and back
 let playerTurn = 'X';
+
 
 // is a function that print the current status of the board using the variable - board
 const printBoard = () => {
@@ -32,25 +29,69 @@ const printBoard = () => {
   console.log('2 ' + board[2].join(' | '));
 }
 
+
 const horizontalWin = () => {
-  // Your code here to check for horizontal wins
+  let p = playerTurn
+  if( (p == board[0][0] && p == board[0][1] && p == board[0][2]) || (p == board[1][0] && p == board[1][1] && p == board[1][2])
+    || (p == board[2][0] && p == board[2][1] && p == board[2][2]) ) {
+    return true
+  }
+        
 }
 
 const verticalWin = () => {
-  // Your code here to check for vertical wins
-}
+  let p = playerTurn
+      if( (p == board[0][0] && p == board[1][0] && p == board[2][0]) ||  (p == board[0][1] && p == board[1][1] && p == board[2][1])
+        ||  (p == board[0][2] && p == board[1][2] && p == board[2][2]) ) {
+      return true
+    }
+  }
+
 
 const diagonalWin = () => {
-  // Your code here to check for diagonal wins
+  let p = playerTurn
+  if( (p == board[0][0] && p == board[1][1] && p == board[2][2]) || (p == board[0][2] && p == board[1][1] && p ==board[2][0]) ) {
+    return true
+  }
 }
 
 const checkForWin = () => {
-  // Your code here call each of the check for types of wins
+  if(horizontalWin() || diagonalWin() || verticalWin() ){
+    return true
+  }
 }
 
-const ticTacToe = (row, column) => {
-  // Your code here to place a marker on the board
-  // then check for a win
+// const resetBoard = () =>{
+//   console.log(playerTurn + 'wins')
+
+//     board = [
+//   [' ', ' ', ' '],
+//   [' ', ' ', ' '],
+//   [' ', ' ', ' ']
+// ];
+// }
+
+
+
+
+const ticTacToe = (row,column) => {
+  
+  if(board[row][column] == ' ') {
+    board[row][column] = playerTurn;
+  }
+  else{
+    return console.log('Spot Taken');
+  }
+
+  if(playerTurn == 'X'){
+    playerTurn = 'O'
+  }
+  else{
+    playerTurn = 'X';
+  }
+
+
+  // checkForWin();
 }
 
 const getPrompt = () => {
@@ -59,7 +100,12 @@ const getPrompt = () => {
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
       ticTacToe(row, column);
-      getPrompt();
+      if(checkForWin()){
+        return console.log(playerTurn + 'wins')
+      }
+      else{
+        getPrompt();
+      }
     });
   });
 }
