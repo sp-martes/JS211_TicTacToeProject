@@ -31,46 +31,47 @@ const printBoard = () => {
 
 
 const horizontalWin = () => {
-  let p = playerTurn
-  if( (p == board[0][0] && p == board[0][1] && p == board[0][2]) || (p == board[1][0] && p == board[1][1] && p == board[1][2])
-    || (p == board[2][0] && p == board[2][1] && p == board[2][2]) ) {
+  if( (playerTurn == board[0][0] && playerTurn == board[0][1] && playerTurn == board[0][2]) || 
+      (playerTurn == board[1][0] && playerTurn == board[1][1] && playerTurn == board[1][2]) ||
+      (playerTurn == board[2][0] && playerTurn == board[2][1] && playerTurn == board[2][2]) ) {
     return true
   }
         
 }
 
 const verticalWin = () => {
-  let p = playerTurn
-      if( (p == board[0][0] && p == board[1][0] && p == board[2][0]) ||  (p == board[0][1] && p == board[1][1] && p == board[2][1])
-        ||  (p == board[0][2] && p == board[1][2] && p == board[2][2]) ) {
+      if( (playerTurn == board[0][0] && playerTurn == board[1][0] && playerTurn == board[2][0]) ||  
+          (playerTurn == board[0][1] && playerTurn == board[1][1] && playerTurn == board[2][1]) ||  
+          (playerTurn == board[0][2] && playerTurn == board[1][2] && playerTurn == board[2][2]) ) {
       return true
-    }
+      }
   }
 
 
 const diagonalWin = () => {
-  let p = playerTurn
-  if( (p == board[0][0] && p == board[1][1] && p == board[2][2]) || (p == board[0][2] && p == board[1][1] && p ==board[2][0]) ) {
+  if( (playerTurn == board[0][0] && playerTurn == board[1][1] && playerTurn == board[2][2]) || 
+      (playerTurn == board[0][2] && playerTurn == board[1][1] && playerTurn == board[2][0]) ) {
     return true
-  }
+    }
+}
+
+
+const resetBoard = () =>{
+  let reset = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']
+  ];
+
+  console.log(playerTurn + ' wins! Play again?')
+  return board = reset 
 }
 
 const checkForWin = () => {
   if(horizontalWin() || diagonalWin() || verticalWin() ){
-    return true
+    resetBoard();
   }
 }
-
-// const resetBoard = () =>{
-//   console.log(playerTurn + 'wins')
-
-//     board = [
-//   [' ', ' ', ' '],
-//   [' ', ' ', ' '],
-//   [' ', ' ', ' ']
-// ];
-// }
-
 
 
 
@@ -80,8 +81,10 @@ const ticTacToe = (row,column) => {
     board[row][column] = playerTurn;
   }
   else{
-    return console.log('Spot Taken');
+    return console.log('Spot Taken!!');
   }
+  
+  checkForWin();
 
   if(playerTurn == 'X'){
     playerTurn = 'O'
@@ -89,10 +92,8 @@ const ticTacToe = (row,column) => {
   else{
     playerTurn = 'X';
   }
-
-
-  // checkForWin();
 }
+
 
 const getPrompt = () => {
   printBoard();
@@ -100,12 +101,7 @@ const getPrompt = () => {
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
       ticTacToe(row, column);
-      if(checkForWin()){
-        return console.log(playerTurn + 'wins')
-      }
-      else{
-        getPrompt();
-      }
+      getPrompt();
     });
   });
 }
