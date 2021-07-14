@@ -62,13 +62,14 @@ const resetBoard = () =>{
     [' ', ' ', ' '],
     [' ', ' ', ' ']
   ];
-
   console.log(playerTurn + ' wins! Play again?')
   return board = reset 
 }
 
 const checkForWin = () => {
   if(horizontalWin() || diagonalWin() || verticalWin() ){
+    playerTurn;
+    printBoard();
     resetBoard();
   }
 }
@@ -92,6 +93,7 @@ const ticTacToe = (row,column) => {
   else{
     playerTurn = 'X';
   }
+  
 }
 
 
