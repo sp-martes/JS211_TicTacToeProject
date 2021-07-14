@@ -68,7 +68,6 @@ const resetBoard = () =>{
 
 const checkForWin = () => {
   if(horizontalWin() || diagonalWin() || verticalWin() ){
-    playerTurn;
     printBoard();
     resetBoard();
   }
